@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
+
 <head>
 	<meta charset="utf-8">
-	<title>Migos Hangman</title>
-
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Hangman Game</title>
+	<!-- Resets native CSS Styling -->
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
 	<link href="https://fonts.googleapis.com/css?family=Diplomata+SC" rel="stylesheet">
 
-	<script src="assets/javascript/game.js"></script>
-
-
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
 	<div id="middleContent" class="container">
@@ -30,52 +23,55 @@
 			<div class="col-md-12">
 				<h1 id="gameTitle" class="center-block">Guess that Migos adlib!</h1>
 				<p class="center-block">
-					You have <b>10 guesses</b> per word before your money runs out and <b>3 chances</b> before the game's over.
+					You have <b>10, 5 or 3 Chances</b> to use per word. Stack a milli for every win! Dab! <img src="https://s-media-cache-ak0.pinimg.com/originals/f7/a4/bd/f7a4bd3aca721ca3d84ac8218fd1f697.jpg" height="30px">
 				</p>
+				<p id="message"></p>
+				<div id="result">Use the letters on your keyboard to guess each letter.</div>
 				</br>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-2">
-				<img src="http://pngimg.com/uploads/money/money_PNG3523.png" class="center-block moneyImg">
-				<p>Money remaining:</p>
-				<h2 id="gameTitle">$10M</h2>
 				<img src="assets/images/chance.png" class="center-block khaledImg">
-				<br>
-				<img src="assets/images/chance.png" class="center-block khaledImg">
-				<br>
-				<img src="assets/images/chance.png" class="center-block khaledImg">
-				<p>Chance the Rappers (Lives) remaining</p>
+				<p>Chances used:</p>
+				<h2 class="title" id="chances"></h2>
+				<img src="assets/images/money.png" class="center-block khaledImg">
+				<p>Money earned:</p>
+				<h2 class="title" id="score">$0M</h2>
 			</div>
 			<div class="col-md-8">
-				<img src="https://yt3.ggpht.com/-fAud4ImIFsQ/AAAAAAAAAAI/AAAAAAAAAAA/GpbLFKz5frA/s900-c-k-no-mo-rj-c0xffffff/photo.jpg" class="center-block" id="mainPic">
-				<div class="guessBox">
-					<p id="newWord"></p>
+				<img src="assets/images/migos-bg.jpg" class="center-block" id="mainPic">
+				<div class="guessBox center-block">
+					<h1 class="title" id="wordSpace"></h1>
+				</div>
+				<div>
+					<p id="used">Guessed letters: </p>
 				</div>
 			</div>
 			<div class="col-md-2">
-				<img src="https://s3.amazonaws.com/user-media.venngage.com/262531-31082f5afbd23554263cf259de1934df.png" class="center-block khaledImg">
-				<p>Anotha one? Type capital:</p>
-				<h2 id="gameTitle">"L"</h2>
-				<img src="assets/images/bieber.png" class="center-block khaledImg">
-				<p>Easy</p>
-				<img src="assets/images/drake.png" class="center-block khaledImg">
-				<p>Medium
-				</p>
-				<img src="assets/images/21savage.png" class="center-block khaledImg">
-				<p>Hard</p>
+				<input type="image" src="assets/images/khaled.png" class="center-block khaledImg" onclick="newStart()">
+				<p>New word? Anotha</p>
+				<h2 class="title">ONE</h2>
+				<input type="image" src="assets/images/bieber.png" name="easy" class="center-block khaledImg" onclick="easyMode()">
+				<p id="catagoryNameEasy">Easy (10 Chances)</p>
+				<input type="image" src="assets/images/drake.png" name="medium" class="center-block khaledImg" onclick="mediumMode()">
+				<p id="catagoryNameMedium">Medium (5 Chances)</p>
+				<input type="image" src="assets/images/21savage.png" name="hard" class="center-block khaledImg" onclick="hardMode()">
+				<p id="catagoryNameHard">Hard (3 Chances)</p>
 			</div>
 		</div>
 	</div>
 
 	<footer>
 		<div class="row">
-				<div class="col-md-12">
-					<br>
-					<p id="footer" class="center-block">v1, <a href="https://instagram.com/natevillegas">@natevillegas</a>, <a href="https://soundcloud.com/migosatl/bad-and-boujee-feat-lil-uzi-vert-prod-by-metro-boomin#t=0:09">#fortheculture</a></p>
-				</div>
+			<div class="col-md-12">
+				<br>
+				<p id="footer" class="center-block">v1, <a href="https://instagram.com/natevillegas">@natevillegas</a>, <a href="https://soundcloud.com/migosatl/bad-and-boujee-feat-lil-uzi-vert-prod-by-metro-boomin#t=0:09">#fortheculture</a>, 
+				Dab! <img src="https://s-media-cache-ak0.pinimg.com/originals/f7/a4/bd/f7a4bd3aca721ca3d84ac8218fd1f697.jpg" height="30px"> Dab! <img src="https://s-media-cache-ak0.pinimg.com/originals/f7/a4/bd/f7a4bd3aca721ca3d84ac8218fd1f697.jpg" height="30px"></p>
+			</div>
 		</div>
 	</footer>
-
+	<script type="text/javascript" src="assets/javascript/game.js"></script>
 </body>
+
 </html>

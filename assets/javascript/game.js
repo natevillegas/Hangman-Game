@@ -1,41 +1,150 @@
-// list of words to play with
-var words = ["skrt skrt","dab","raindrop","droptop","yeah yeah yeah", "dat way", "aye", "bao","whoop","woo", "bad and boujee","culture","versace","band"];
-// creates an emtpy array of guesses
-var wrongGuess = [];
-// random generator so user gets a new word every new game
-var nextWord = words[Math.floor(Math.random()*words.length)];
+var wordBank = ["skrrt","bao","aye","versace","raindrop","droptop","leggo","toptop","yeah","aye","bando","datway"];
+var randNum;
+var word;
+var userChoiceArray = [];
+var userIndexArray = [];
+var guesses = 0;
+var chances = 10;
+var score = 0;
+var guessingDisabled = false;
+var gameStart = false;
+newGame();
 
-for (i = 0, i < words.length, i++) {
-	if (words[i] )
+document.onkeyup = function(event) {
+    var userInput = String.fromCharCode(event.keyCode).toLowerCase();
+    if ((event.keyCode >= 65) && (event.keyCode <= 90) && (guessingDisabled == false))  {
+      gameStart = true;
+      if (userChoiceArray.indexOf(userInput) >= 0) {
+        alert("You already guessed that!");
+      }
+      
+      else { 
+        userChoiceArray.push(userInput);
+        if (userChoiceArray.length == 1);
+        document.querySelector("#used").innerHTML = "Guessed letters: " + userChoiceArray.toString();
+        if (word.indexOf(userInput) == -1) {
+          guesses++;
+          document.querySelector("#chances").innerHTML = guesses;
+        }
+
+        if (guesses == chances) {
+          document.querySelector("#result").innerHTML = "YOU LOSE!";
+          if (chances == 10) score--;
+          if (chances == 5) score--;
+          if (chances == 3) score--;
+          updateScore();
+          guessingDisabled = true;
+          gameStart = false;
+          enable();
+        }
+
+        for (var i = 0; i < word.length; i++) {
+            if (word[i] == userInput) userIndexArray
+            .push(i);
+        }
+
+        if (userIndexArray
+        .length > 0) {
+            for (i = 0; i < userIndexArray.length; i++) {
+                document.querySelector("#letter" + userIndexArray[i]).innerHTML = "  " + userInput + "  ";
+            }
+            userIndexArray = [];
+        }
+
+        var win = false;
+        var sum = 0;
+        var counter = 0;
+
+        while (!win) {
+            if (userChoiceArray.indexOf(word[counter]) >= 0) sum++;
+            if (sum == word.length) {
+                win = true;
+                document.querySelector("#result").innerHTML = "DAB! YOU WIN!";
+                if (chances == 10) score++;
+                if (chances == 5) score++;
+                if (chances == 3) score++;
+                updateScore();
+                guessingDisabled = true;
+                gameStart = false;
+                enable();
+            }
+
+            if (counter == userChoiceArray.length) break;
+            counter++;
+        }
+      } 
+    }
 }
 
-if (userInput == "L") {
-	nextWord
+function newStart() {
+    if (gameStart == true || userChoiceArray.length == 0) {
+        newGame();
+    }
+};
+
+function easyMode()  {
+    if (gameStart == false || userChoiceArray.length == 0) {
+        chances = 10;
+        newGame();
+    }
+};
+
+function mediumMode()  {
+    if (gameStart == false || userChoiceArray.length == 0) {
+        chances = 5;
+        newGame();
+    }
+};
+
+function hardMode()  {
+    if (gameStart == false || userChoiceArray.length == 0) {
+        chances = 3;
+        newGame();
+    }
+};
+
+function getWord() {
+    randNum = Math.floor(Math.random() * wordBank.length);
+    word = wordBank[randNum];
+    return word;
 }
 
-
-
-
-
-// function that gets user inputted letter
-document.onkeyup = function() {
-	var userInput = String.fromCharCode(event.keyCode).toLowerCase();
-	alert(userInput);
+function blankSpace(string) {
+    for (var i = 0; i < string.length; i++) {
+        document.querySelector("#wordSpace").innerHTML += "<span id=letter" + i + ">_" + " " + "</span>";
+        document.querySelector("#message").innerHtml = "Use the letters on your keyboard to guess each letter.";
+    }
 }
 
+function updateScore() {
+  document.querySelector("#score").innerHTML = "$" + score + "M";
+}
 
-var html = "#"
+function reset() {
+    guesses = 0;
+    win = false
+    counter = 0;
+    sum = 0;
+    userChoiceArray = [];
+    userIndexArray
+   = [];
+    guessingDisabled
+   = false;
+    gameStart = false;
+    word = "";
+    randNum = 0;
+    document.querySelector("#wordSpace").innerHTML = "";
+    document.querySelector("#result").innerHTML = "";
+    document.querySelector("#used").innerHTML = "Guessed Letters: ";
+    document.querySelector("#chances").innerHTML = guesses;
 
-// prints 
-document.querySelector('#game').innterHTML	= html;
+}
 
+function enable() {
+    document.querySelector("#message").innerHtml = "Use the letters on your keyboard to guess each letter.";
+}
 
-
-
-
-
-
-//lone function
-
-wrongGuess.push(userInput);
-
+function newGame() {
+    reset();
+    blankSpace(getWord());
+}
