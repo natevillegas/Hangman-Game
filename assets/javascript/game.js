@@ -21,7 +21,7 @@ document.onkeyup = function(event) {
       else { 
         userChoiceArray.push(userInput);
         if (userChoiceArray.length == 1);
-        document.querySelector("#used").innerHTML = "Guessed letters: " + userChoiceArray.toString();
+        document.querySelector("#used").innerHTML = userChoiceArray.toString();
         if (word.indexOf(userInput) == -1) {
           guesses++;
           document.querySelector("#chances").innerHTML = guesses;
@@ -135,7 +135,7 @@ function reset() {
     randNum = 0;
     document.querySelector("#wordSpace").innerHTML = "";
     document.querySelector("#result").innerHTML = "";
-    document.querySelector("#used").innerHTML = "Guessed Letters: ";
+    document.querySelector("#used").innerHTML = "";
     document.querySelector("#chances").innerHTML = guesses;
 
 }
